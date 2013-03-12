@@ -35,7 +35,7 @@ access:
 
 import datetime
 import os
-import select
+from select import cpython_compatible_select as select
 import socket
 import struct
 import threading
@@ -158,7 +158,7 @@ def _parse_uri(uri, default_port=27017):
 def _closed(sock):
     """Return True if we know socket has been closed, False otherwise.
     """
-    rd, _, _ = select.select([sock], [], [], 0)
+    rd, _, _ = select([sock], [], [], 0)
     try:
         return len(rd) and sock.recv() == ""
     except:
